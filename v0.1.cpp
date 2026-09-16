@@ -16,16 +16,17 @@ int main()
     studentas A;
     std::cout << "Iveskite varda ir pavarde per tarpa: ";
     std::cin >> A.vardas >> A.pavarde;
-    int k;
-    std::cout << "Iveskite pazymiu skaiciu: ";
-    std::cin >> k;
-    for (int i = 0; i < k; i++) {
-        int pazymys;
-        std::cout << "Iveskite " << i + 1 << " pazymi: ";
-        std::cin >> pazymys;
+    std::cout << "Iveskite studento namu darbu pazymius po viena spausdami enter, kai baigsite paspauskite enter nieko neivedus: ";
+    std::cin.ignore();
+    string ivestis;
+    while (true) {
+        std::getline(std::cin, ivestis);
+        if (ivestis.empty()) {
+            break;
+        }
+        int pazymys = std::stoi(ivestis);
         A.pazymiai.push_back(pazymys);
     }
-    
     std::cout << "Iveskite studento egzamino rezultata: ";
     std::cin >> A.exam;
     double suma = 0;
@@ -43,8 +44,16 @@ int main()
     }
     double galutinis = 0.4 * vidurkis + 0.6 * A.exam;
     double galutinis_mediana = 0.4 * mediana + 0.6 * A.exam;
-    std::cout << "Studento galutinis rezultatas: " << std::fixed << std::setprecision(2) << galutinis << std::endl;
-    std::cout << "Studento galutinis rezultatas (naudojant mediana): " << std::fixed << std::setprecision(2) << galutinis_mediana << std::endl;
+    std::cout << "Kokio isvedimo tipa norite matyti? (1 - vidurkis, 2 - mediana, 3 - abu): ";
+    int isvedimo_tipas;
+    std::cin >> isvedimo_tipas;
+    if (isvedimo_tipas == 1) {
+        std::cout << "Studento galutinis rezultatas: " << std::fixed << std::setprecision(2) << galutinis << std::endl;
+    } else if (isvedimo_tipas == 2) {
+        std::cout << "Studento galutinis rezultatas (naudojant mediana): " << std::fixed << std::setprecision(2) << galutinis_mediana << std::endl;
+    } else {
+        std::cout << "Studento galutinis rezultatas: " << std::fixed << std::setprecision(2) << galutinis << std::endl;
+        std::cout << "Studento galutinis rezultatas (naudojant mediana): " << std::fixed << std::setprecision(2) << galutinis_mediana << std::endl;
+    }
 
 }
- 
