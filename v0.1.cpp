@@ -4,6 +4,8 @@
 #include <iomanip>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
+#include <sstream>
 using std::string;
 using std::vector;
 
@@ -20,11 +22,16 @@ int main()
 {
     srand(time(0));
     vector<studentas> grupe;
+    studentas A;
+    std::cout << "Kaip norite ivesti studentu duomenis? rankiniu budu/generuoti(1)? Ar nuskaityti is failo(2)? ";
+    int failo_pasirinkimas;
+    std::cin >> failo_pasirinkimas;
+    if (failo_pasirinkimas == 1 ) {
+
     std::cout << "Iveskite studentu skaiciu: ";
     int n;
     std::cin >> n;
     std::cin.ignore();
-    studentas A;
     for(int i = 0; i < n; i++) {
         std::cout << "Iveskite varda ir pavarde per tarpa: ";
         std::cin >> A.vardas >> A.pavarde;
@@ -87,11 +94,47 @@ int main()
     A.galutinis_mediana = 0.4 * mediana + 0.6 * A.exam;
     grupe.push_back(A);
     }
-    
+    }
+    else {
+        std::ifstream fd("C:\\Users\\Pijus\\Downloads\\kursiokai.txt");
+        if (!fd.is_open()) {
+            std::cout << "Nepavyko atidaryti failo!" << std::endl;
+            return 1;
+        }
+        std::string eilute;
+        std::getline(fd, eilute);
+        while(std::getline(fd,eilute)) {
+            std::stringstream ss(eilute);
+            studentas A;
+            ss >> A.vardas >> A.pavarde;
+            int pazymys;
+            while (ss >> pazymys) {
+                A.pazymiai.push_back(pazymys);
+            }
+                A.exam = A.pazymiai.back();
+                A.pazymiai.pop_back();
+                double suma=0;
+                for (int i = 0; i < A.pazymiai.size(); i++) {
+                    suma += A.pazymiai[i];
+                }
+                double vidurkis = suma / A.pazymiai.size();
+                double mediana;
+                if (A.pazymiai.size() % 2 == 0) {
+                    int mid = A.pazymiai.size() / 2;
+                    mediana = (A.pazymiai[mid - 1] + A.pazymiai[mid]) / 2.0;
+                } else {
+                    int mid = A.pazymiai.size() / 2;
+                    mediana = A.pazymiai[mid];
+                }
+                A.galutinis = 0.4 * vidurkis + 0.6 * A.exam;
+                A.galutinis_mediana = 0.4 * mediana + 0.6 * A.exam;
+                grupe.push_back(A);
+        }
+    }
     std::cout << "Kokio isvedimo tipa norite matyti? (1 - vidurkis, 2 - mediana, 3 - abu): ";
     int isvedimo_tipas;
     std::cin >> isvedimo_tipas;
-    std::cout << std::left << std::setw(15) << "Vardas " << std::setw(15) << "Pavarde " << std::setw(10) << "Galutinis(Vid.) " << std::setw(10) << "Galutinis(Med.)" << std::endl;
+    std::cout << std::left << std::setw(10) << "Vardas " << std::setw(10) << "Pavarde " << std::setw(10) << "Galutinis(Vid.) " << std::setw(10) << "Galutinis(Med.)" << std::endl;
     std::cout << "---------------------------------------------------------------------\n";
     for (studentas B: grupe) {
         printas(B, isvedimo_tipas);
@@ -100,7 +143,7 @@ int main()
 }
 void printas(studentas A, int isvedimo_tipas) {
     std::cout << std::fixed << std::setprecision(2);
-    std::cout << std::left << std::setw(15) << A.vardas << std::setw(15) << A.pavarde;
+    std::cout << std::left << std::setw(10) << A.vardas << std::setw(10) << A.pavarde;
     if (isvedimo_tipas == 1 || isvedimo_tipas == 3) {
         std::cout <<std::right << std::setw(10) << A.galutinis;
     }
