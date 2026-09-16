@@ -10,14 +10,23 @@ struct studentas{
     string vardas, pavarde;
     vector<int> pazymiai;
     int exam;
+    double galutinis;
+    double galutinis_mediana;
     };
+    void printas(studentas A, int isvedimo_tipas);
 int main() 
 {
-    studentas A;
-    std::cout << "Iveskite varda ir pavarde per tarpa: ";
-    std::cin >> A.vardas >> A.pavarde;
-    std::cout << "Iveskite studento namu darbu pazymius po viena spausdami enter, kai baigsite paspauskite enter nieko neivedus: ";
+    vector<studentas> grupe;
+    std::cout << "Iveskite studentu skaiciu: ";
+    int n;
+    std::cin >> n;
     std::cin.ignore();
+    studentas A;
+    for(int i = 0; i < n; i++) {
+        std::cout << "Iveskite varda ir pavarde per tarpa: ";
+        std::cin >> A.vardas >> A.pavarde;
+        std::cout << "Iveskite studento namu darbu pazymius po viena spausdami enter, kai baigsite paspauskite enter nieko neivedus: ";
+        std::cin.ignore();
     string ivestis;
     while (true) {
         std::getline(std::cin, ivestis);
@@ -51,18 +60,30 @@ int main()
         int mid = A.pazymiai.size() / 2;
         mediana = A.pazymiai[mid];
     }
-    double galutinis = 0.4 * vidurkis + 0.6 * A.exam;
-    double galutinis_mediana = 0.4 * mediana + 0.6 * A.exam;
+    A.galutinis = 0.4 * vidurkis + 0.6 * A.exam;
+    A.galutinis_mediana = 0.4 * mediana + 0.6 * A.exam;
+    grupe.push_back(A);
+    }
+    
     std::cout << "Kokio isvedimo tipa norite matyti? (1 - vidurkis, 2 - mediana, 3 - abu): ";
     int isvedimo_tipas;
     std::cin >> isvedimo_tipas;
-    if (isvedimo_tipas == 1) {
-        std::cout << "Studento galutinis rezultatas: " << std::fixed << std::setprecision(2) << galutinis << std::endl;
-    } else if (isvedimo_tipas == 2) {
-        std::cout << "Studento galutinis rezultatas (naudojant mediana): " << std::fixed << std::setprecision(2) << galutinis_mediana << std::endl;
-    } else {
-        std::cout << "Studento galutinis rezultatas: " << std::fixed << std::setprecision(2) << galutinis << std::endl;
-        std::cout << "Studento galutinis rezultatas (naudojant mediana): " << std::fixed << std::setprecision(2) << galutinis_mediana << std::endl;
+    std::cout << std::left << std::setw(15) << "Vardas " << std::setw(15) << "Pavarde " << std::setw(10) << "Galutinis (vidurkis) " << std::setw(10) << "Galutinis (mediana)" << std::endl;
+    std::cout << "---------------------------------------------------------------------\n";
+    for (studentas B: grupe) {
+        printas(B, isvedimo_tipas);
     }
+    return 0;
+}
+void printas(studentas A, int isvedimo_tipas) {
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << std::left << std::setw(15) << A.vardas << std::setw(15) << A.pavarde;
+    if (isvedimo_tipas == 1 || isvedimo_tipas == 3) {
+        std::cout << std::setw(10) << A.galutinis;
+    }
+    if (isvedimo_tipas == 2 || isvedimo_tipas == 3) {
+        std::cout << std::setw(10) << A.galutinis_mediana;
+    }
+    std::cout << std::endl; 
 
 }
