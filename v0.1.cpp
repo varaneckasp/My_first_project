@@ -24,8 +24,17 @@ int main()
         if (ivestis.empty()) {
             break;
         }
-        int pazymys = std::stoi(ivestis);
-        A.pazymiai.push_back(pazymys);
+        try {
+            int pazimys = std::stoi(ivestis);
+            if (pazimys < 1 || pazimys > 10) {
+                std::cout << "Ivestas netinkamas pazymys. Iveskite pazymi nuo 1 iki 10: ";
+            } else {
+                A.pazymiai.push_back(pazimys);
+            }
+        }
+        catch (...) {
+            std::cout << "Ivestas netinkamas pazymys. Iveskite pazymi nuo 1 iki 10: ";
+        }
     }
     std::cout << "Iveskite studento egzamino rezultata: ";
     std::cin >> A.exam;
