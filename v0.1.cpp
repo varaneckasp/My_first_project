@@ -101,7 +101,7 @@ int main()
     }
     }
     else {
-        std::ifstream fd("C:\\Users\\Pijus\\Downloads\\kursiokai.txt");
+        std::ifstream fd("C:\\Users\\Pijus\\Downloads\\studentai100000.txt");
         if (!fd.is_open()) {
             std::cout << "Nepavyko atidaryti failo!" << std::endl;
             return 1;
@@ -140,12 +140,12 @@ int main()
     std::cout << "Kokio isvedimo tipa norite matyti? (1 - vidurkis, 2 - mediana, 3 - abu): ";
     int isvedimo_tipas;
     std::cin >> isvedimo_tipas;
-    std::cout << std::left << std::setw(10) << "Vardas " << std::setw(10) << "Pavarde " ;
+    std::cout << std::left << std::setw(15) << "Vardas " << std::setw(15) << "Pavarde " ;
     if (isvedimo_tipas == 1 || isvedimo_tipas == 3) {
-        std::cout << std::setw(10) << "Galutinis(Vid.) ";
+        std::cout << std::setw(20) << "Galutinis(Vid.) ";
     }
     if (isvedimo_tipas == 2 || isvedimo_tipas == 3) {
-        std::cout << std::setw(10) << "Galutinis(Med.)";
+        std::cout << std::setw(20) << "Galutinis(Med.)";
     }
     std::cout << std::endl;
     std::cout << "---------------------------------------------------------------------\n";
@@ -157,12 +157,12 @@ int main()
 }
 void printas(studentas A, int isvedimo_tipas) {
     std::cout << std::fixed << std::setprecision(2);
-    std::cout << std::left << std::setw(10) << A.vardas << std::setw(10) << A.pavarde;
+    std::cout << std::left << std::setw(15) << A.vardas << std::setw(15) << A.pavarde;
     if (isvedimo_tipas == 1 || isvedimo_tipas == 3) {
-        std::cout <<std::right << std::setw(10) << A.galutinis;
+        std::cout <<std::left << std::setw(20) << A.galutinis;
     }
     if (isvedimo_tipas == 2 || isvedimo_tipas == 3) {
-        std::cout <<std::right << std::setw(10) << A.galutinis_mediana;
+        std::cout <<std::left << std::setw(20) << A.galutinis_mediana;
     }
     std::cout << std::endl; 
 
