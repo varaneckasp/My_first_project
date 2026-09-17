@@ -6,6 +6,7 @@
 #include <ctime>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 using std::string;
 using std::vector;
 
@@ -83,6 +84,7 @@ int main()
     }
     double vidurkis = suma / A.pazymiai.size();
      double mediana;
+     std::sort(A.pazymiai.begin(), A.pazymiai.end());
     if (A.pazymiai.size() % 2 == 0) {
         int mid = A.pazymiai.size() / 2;
         mediana = (A.pazymiai[mid - 1] + A.pazymiai[mid]) / 2.0;
@@ -118,6 +120,7 @@ int main()
                     suma += A.pazymiai[i];
                 }
                 double vidurkis = suma / A.pazymiai.size();
+                std::sort(A.pazymiai.begin(), A.pazymiai.end());
                 double mediana;
                 if (A.pazymiai.size() % 2 == 0) {
                     int mid = A.pazymiai.size() / 2;
