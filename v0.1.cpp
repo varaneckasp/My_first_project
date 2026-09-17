@@ -19,6 +19,9 @@ struct studentas{
     double galutinis_mediana;
     };
     void printas(studentas A, int isvedimo_tipas);
+    bool palygintiVardus(const studentas &a, const studentas &b) {
+        return a.vardas < b.vardas;
+    }
 int main() 
 {
     srand(time(0));
@@ -137,8 +140,16 @@ int main()
     std::cout << "Kokio isvedimo tipa norite matyti? (1 - vidurkis, 2 - mediana, 3 - abu): ";
     int isvedimo_tipas;
     std::cin >> isvedimo_tipas;
-    std::cout << std::left << std::setw(10) << "Vardas " << std::setw(10) << "Pavarde " << std::setw(10) << "Galutinis(Vid.) " << std::setw(10) << "Galutinis(Med.)" << std::endl;
+    std::cout << std::left << std::setw(10) << "Vardas " << std::setw(10) << "Pavarde " ;
+    if (isvedimo_tipas == 1 || isvedimo_tipas == 3) {
+        std::cout << std::setw(10) << "Galutinis(Vid.) ";
+    }
+    if (isvedimo_tipas == 2 || isvedimo_tipas == 3) {
+        std::cout << std::setw(10) << "Galutinis(Med.)";
+    }
+    std::cout << std::endl;
     std::cout << "---------------------------------------------------------------------\n";
+    std::sort(grupe.begin(), grupe.end(), palygintiVardus);
     for (studentas B: grupe) {
         printas(B, isvedimo_tipas);
     }
