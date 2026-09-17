@@ -101,7 +101,7 @@ int main()
     }
     }
     else {
-        std::ifstream fd("C:\\Users\\Pijus\\Downloads\\studentai100000.txt");
+        std::ifstream fd("studentai10000.txt");
         if (!fd.is_open()) {
             std::cout << "Nepavyko atidaryti failo!" << std::endl;
             return 1;
