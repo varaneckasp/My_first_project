@@ -41,12 +41,12 @@ int main()
     std::chrono::duration<double> skirtumas4 = laikas_pabaiga4 - laikas_pradzia4;
     std::cout << "Sugeneruotas failas studentai1000000.txt per " << skirtumas4.count() << " sekundziu." << std::endl;
 
-    /*auto laikas_pradzia5 = std::chrono::high_resolution_clock::now();
+    auto laikas_pradzia5 = std::chrono::high_resolution_clock::now();
     atsitiktinis_sarasas("studentai10000000.txt", 10000000);
     auto laikas_pabaiga5 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> skirtumas5 = laikas_pabaiga5 - laikas_pradzia5;
     std::cout << "Sugeneruotas failas studentai10000000.txt per " << skirtumas5.count() << " sekundziu." << std::endl;
-*/
+
     /* 
     vector<studentas> grupe;
     studentas A;
