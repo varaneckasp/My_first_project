@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <chrono>
 #include "studentas.h"
 #include "funkcijos.h"
 #include "funkcijos.cpp"
@@ -16,6 +17,37 @@ using std::vector;
 int main() 
 {
     srand(time(0));
+    auto laikas_pradzia = std::chrono::high_resolution_clock::now();
+    atsitiktinis_sarasas("studentai1000.txt", 1000);
+    auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> skirtumas = laikas_pabaiga - laikas_pradzia;
+    std::cout << "Sugeneruotas failas studentai1000.txt per " << skirtumas.count() << " sekundziu." << std::endl;
+    
+    auto laikas_pradzia2 = std::chrono::high_resolution_clock::now();
+    atsitiktinis_sarasas("studentai10000.txt", 10000);
+    auto laikas_pabaiga2 = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> skirtumas2 = laikas_pabaiga2 - laikas_pradzia2;
+    std::cout << "Sugeneruotas failas studentai10000.txt per " << skirtumas2.count() << " sekundziu." << std::endl;
+    
+    auto laikas_pradzia3 = std::chrono::high_resolution_clock::now();
+    atsitiktinis_sarasas("studentai100000.txt", 100000);
+    auto laikas_pabaiga3 = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> skirtumas3 = laikas_pabaiga3 - laikas_pradzia3;
+    std::cout << "Sugeneruotas failas studentai100000.txt per " << skirtumas3.count() << " sekundziu." << std::endl;
+
+    auto laikas_pradzia4 = std::chrono::high_resolution_clock::now();
+    atsitiktinis_sarasas("studentai1000000.txt", 1000000);
+    auto laikas_pabaiga4 = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> skirtumas4 = laikas_pabaiga4 - laikas_pradzia4;
+    std::cout << "Sugeneruotas failas studentai1000000.txt per " << skirtumas4.count() << " sekundziu." << std::endl;
+
+    /*auto laikas_pradzia5 = std::chrono::high_resolution_clock::now();
+    atsitiktinis_sarasas("studentai10000000.txt", 10000000);
+    auto laikas_pabaiga5 = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> skirtumas5 = laikas_pabaiga5 - laikas_pradzia5;
+    std::cout << "Sugeneruotas failas studentai10000000.txt per " << skirtumas5.count() << " sekundziu." << std::endl;
+*/
+    /* 
     vector<studentas> grupe;
     studentas A;
     std::cout << "Kaip norite ivesti studentu duomenis? rankiniu budu/generuoti(1)? Ar nuskaityti is failo(2)? ";
@@ -145,4 +177,5 @@ int main()
         printas(B, isvedimo_tipas);
     }
     return 0;
+    */
 }
