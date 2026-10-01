@@ -220,6 +220,22 @@ int main()
         skirtumas = laikas_pabaiga - laikas_pradzia;
         std::cout << "Studentai suskirstyti i dvi grupes per " << skirtumas.count() << " sekundziu." << std::endl;
         auto laikas_pradzia2 = std::chrono::high_resolution_clock::now();
+        std::cout << "Pagal ka norite rusiuoti studentus? (1 - vardas, 2 - pavarde, 3 - galutinis)" << std::endl;
+        int rusiuoti_pasirinkimas;
+        std::cin >> rusiuoti_pasirinkimas;
+        if (rusiuoti_pasirinkimas == 1) {
+            std::sort(vargsiukai.begin(), vargsiukai.end(), palygintiVardus);
+            std::sort(kietiakai.begin(), kietiakai.end(), palygintiVardus);
+        } else if (rusiuoti_pasirinkimas == 2) {
+            std::sort(vargsiukai.begin(), vargsiukai.end(), palygintiPavardes);
+            std::sort(kietiakai.begin(), kietiakai.end(), palygintiPavardes);
+        } else if (rusiuoti_pasirinkimas == 3) {
+            std::sort(vargsiukai.begin(), vargsiukai.end(), palygintiGalutinius);
+            std::sort(kietiakai.begin(), kietiakai.end(), palygintiGalutinius);
+        } else {
+            std::cout << "Neteisingas pasirinkimas!" << std::endl;
+            return 1;
+        }
         std::ofstream failas_vargsiukai("vargsiukai.txt");
         std::ofstream failas_kietiakai("kietiakai.txt");
         if (!failas_vargsiukai.is_open() || !failas_kietiakai.is_open()) {

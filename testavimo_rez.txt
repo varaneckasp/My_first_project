@@ -1,0 +1,16 @@
+V0.2 programos spartos testavimas
+
+1000 studentu:
+Nuskaitymo vidurkis: 0.003571 s
+Skirstymo vidurkis: 0.000635 s
+Isvedimo i failus vidurkis: 1.955217 s
+
+10000 studentu:
+Nuskaitymo vidurkis: 0.026392 s
+Skirstymo vidurkis: 0.005080 s
+Isvedimo i failus vidurkis: 1.323290 s
+
+100000 studentu:
+Nuskaitymo vidurkis: 0.261957 s
+Skirstymo vidurkis: 0.050323 s
+Isvedimo i failus vidurkis: 2.909270 s

@@ -8,6 +8,12 @@
 bool palygintiVardus(const studentas &a, const studentas &b) {
     return a.vardas < b.vardas;
 }
+bool palygintiPavardes(const studentas &a, const studentas &b) {
+    return a.pavarde < b.pavarde;
+}
+bool palygintiGalutinius(const studentas &a, const studentas &b) {
+    return a.galutinis < b.galutinis;
+}
 void atsitiktinis_sarasas(const std::string &failo_pavadinimas, int studentu_skaicius) {
     std::ofstream fd(failo_pavadinimas);
     if (!fd.is_open()) {
