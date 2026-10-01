@@ -16,7 +16,10 @@ using std::vector;
 int main() 
 {
     srand(time(0));
+    std::chrono::duration<double> skirtumas;
 
+    vector<studentas> vargsiukai;
+    vector<studentas> kietiakai;
     vector<studentas> grupe;
     studentas A;
     std::cout << "Kaip norite ivesti studentu duomenis? rankiniu budu/generuoti(1)? Ar nuskaityti is failo(2)?" << std::endl;
@@ -99,24 +102,25 @@ int main()
         std::cout<< "3 - studentai100000.txt" << std::endl;
         std::cout<< "4 - studentai1000000.txt" << std::endl;
         std::cout<< "5 - studentai10000000.txt" << std::endl;
-        int failo_pasirinkimas;
+        int failo_pav_pasirinkimas;
         string failo_pavadinimas;
-        std::cin >> failo_pasirinkimas;
-        if (failo_pasirinkimas == 1) {
+        std::cin >> failo_pav_pasirinkimas;
+        if (failo_pav_pasirinkimas == 1) {
             failo_pavadinimas = "studentai1000.txt";
-        } else if (failo_pasirinkimas == 2) {
+        } else if (failo_pav_pasirinkimas == 2) {
             failo_pavadinimas = "studentai10000.txt";
-        } else if (failo_pasirinkimas == 3) {
+        } else if (failo_pav_pasirinkimas == 3) {
             failo_pavadinimas = "studentai100000.txt";
-        } else if (failo_pasirinkimas == 4) {
+        } else if (failo_pav_pasirinkimas == 4) {
             failo_pavadinimas = "studentai1000000.txt";
-        } else if (failo_pasirinkimas == 5) {
+        } else if (failo_pav_pasirinkimas == 5) {
             failo_pavadinimas = "studentai10000000.txt";
         }
         else {
             std::cout << "Neteisingas pasirinkimas!" << std::endl;
             return 1;
         }
+        auto laikas_pradzia = std::chrono::high_resolution_clock::now();
         std::ifstream fd(failo_pavadinimas);
         if (!fd.is_open()) {
             std::cout << "Nepavyko atidaryti failo!" << std::endl;
@@ -152,12 +156,15 @@ int main()
                 A.galutinis_mediana = 0.4 * mediana + 0.6 * A.exam;
                 grupe.push_back(A);
         }
+        auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
+        skirtumas = laikas_pabaiga - laikas_pradzia;
+        std::cout << "Failas " << failo_pavadinimas << " nuskaitytas per " << skirtumas.count() << " sekundziu." << std::endl;
     }
     else {
         auto laikas_pradzia = std::chrono::high_resolution_clock::now();
         atsitiktinis_sarasas("studentai1000.txt", 1000);
         auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> skirtumas = laikas_pabaiga - laikas_pradzia;
+        skirtumas = laikas_pabaiga - laikas_pradzia;
         std::cout << "Sugeneruotas failas studentai1000.txt per " << skirtumas.count() << " sekundziu." << std::endl;
     
         auto laikas_pradzia2 = std::chrono::high_resolution_clock::now();
@@ -186,24 +193,69 @@ int main()
         std::cout << "Sugeneruotas failas studentai10000000.txt per " << skirtumas5.count() << " sekundziu." << std::endl;
         */
     }
-    if(failo_pasirinkimas == 1 || failo_pasirinkimas == 2) {
-    std::cout << "Kokio isvedimo tipa norite matyti? (1 - vidurkis, 2 - mediana, 3 - abu): ";
-    int isvedimo_tipas;
-    std::cin >> isvedimo_tipas;
-    std::cout << std::left << std::setw(15) << "Vardas " << std::setw(15) << "Pavarde " ;
-    if (isvedimo_tipas == 1 || isvedimo_tipas == 3) {
-        std::cout << std::setw(20) << "Galutinis(Vid.) ";
+    if (failo_pasirinkimas == 1 || failo_pasirinkimas == 2) {
+        int vertinimo_pasirinkimas;
+        std::cout << "Pagal ka norite rusiuoti studentus? (1 - mediana, 2 - vidurki)" << std::endl;
+        std::cin >> vertinimo_pasirinkimas;
+
+        for (studentas A : grupe) {
+            if (vertinimo_pasirinkimas == 1) {
+                if (A.galutinis_mediana < 5) {
+                    vargsiukai.push_back(A);
+                } else {
+                    kietiakai.push_back(A);
+                }
+            } else if (vertinimo_pasirinkimas == 2) {
+                if (A.galutinis < 5) {
+                    vargsiukai.push_back(A);
+                } else {
+                    kietiakai.push_back(A);
+                }
+            } else {
+                std::cout << "Neteisingas pasirinkimas!" << std::endl;
+                return 1;
+            }
+        }
+
+        std::ofstream failas_vargsiukai("vargsiukai.txt");
+        std::ofstream failas_kietiakai("kietiakai.txt");
+        if (!failas_vargsiukai.is_open() || !failas_kietiakai.is_open()) {
+            std::cout << "Nepavyko sukurti failo!" << std::endl;
+            return 1;
+        }
+
+        failas_vargsiukai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20);
+        failas_kietiakai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20);
+
+        if (vertinimo_pasirinkimas == 1) {
+            failas_vargsiukai << std::setw(20) << "Galutinis (med.)" << std::endl;
+            failas_kietiakai << std::setw(20) << "Galutinis (med.)" << std::endl;
+        } else {
+            failas_vargsiukai << std::setw(20) << "Galutinis (vid.)" << std::endl;
+            failas_kietiakai << std::setw(20) << "Galutinis (vid.)" << std::endl;
+        }
+
+        for (studentas A : vargsiukai) {
+            failas_vargsiukai << std::left << std::setw(20) << A.vardas << std::setw(20) << A.pavarde;
+            if (vertinimo_pasirinkimas == 1) {
+                failas_vargsiukai << std::setw(20) <<std::fixed << std::setprecision(2) << A.galutinis_mediana << std::endl;
+            } else {
+                failas_vargsiukai << std::setw(20) << std::fixed << std::setprecision(2) << A.galutinis << std::endl;
+            }
+        }
+
+        for (studentas A : kietiakai) {
+            failas_kietiakai << std::left << std::setw(20) << A.vardas << std::setw(20) << A.pavarde;
+            if (vertinimo_pasirinkimas == 1) {
+                failas_kietiakai << std::setw(20) <<std::fixed << std::setprecision(2) << A.galutinis_mediana << std::endl;
+            } else {
+                failas_kietiakai << std::setw(20) << std::fixed << std::setprecision(2) << A.galutinis << std::endl;
+            }
+        }
+
+        std::sort(vargsiukai.begin(), vargsiukai.end(), palygintiVardus);
+        std::sort(kietiakai.begin(), kietiakai.end(), palygintiVardus);
     }
-    if (isvedimo_tipas == 2 || isvedimo_tipas == 3) {
-        std::cout << std::setw(20) << "Galutinis(Med.)";
-    }
-    std::cout << std::endl;
-    std::cout << "---------------------------------------------------------------------\n";
-    std::sort(grupe.begin(), grupe.end(), palygintiVardus);
-    for (studentas B: grupe) {
-        printas(B, isvedimo_tipas);
-    }
-}
+
     return 0;
-    
 }
