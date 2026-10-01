@@ -1,4 +1,3 @@
-#pragma once
 #include "funkcijos.h"
 #include <fstream>
 #include <iomanip>

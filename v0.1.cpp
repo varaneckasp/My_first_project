@@ -10,51 +10,20 @@
 #include <chrono>
 #include "studentas.h"
 #include "funkcijos.h"
-#include "funkcijos.cpp"
 using std::string;
 using std::vector;
 
 int main() 
 {
     srand(time(0));
-    auto laikas_pradzia = std::chrono::high_resolution_clock::now();
-    atsitiktinis_sarasas("studentai1000.txt", 1000);
-    auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> skirtumas = laikas_pabaiga - laikas_pradzia;
-    std::cout << "Sugeneruotas failas studentai1000.txt per " << skirtumas.count() << " sekundziu." << std::endl;
-    
-    auto laikas_pradzia2 = std::chrono::high_resolution_clock::now();
-    atsitiktinis_sarasas("studentai10000.txt", 10000);
-    auto laikas_pabaiga2 = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> skirtumas2 = laikas_pabaiga2 - laikas_pradzia2;
-    std::cout << "Sugeneruotas failas studentai10000.txt per " << skirtumas2.count() << " sekundziu." << std::endl;
-    
-    auto laikas_pradzia3 = std::chrono::high_resolution_clock::now();
-    atsitiktinis_sarasas("studentai100000.txt", 100000);
-    auto laikas_pabaiga3 = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> skirtumas3 = laikas_pabaiga3 - laikas_pradzia3;
-    std::cout << "Sugeneruotas failas studentai100000.txt per " << skirtumas3.count() << " sekundziu." << std::endl;
 
-    auto laikas_pradzia4 = std::chrono::high_resolution_clock::now();
-    atsitiktinis_sarasas("studentai1000000.txt", 1000000);
-    auto laikas_pabaiga4 = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> skirtumas4 = laikas_pabaiga4 - laikas_pradzia4;
-    std::cout << "Sugeneruotas failas studentai1000000.txt per " << skirtumas4.count() << " sekundziu." << std::endl;
-    
-    auto laikas_pradzia5 = std::chrono::high_resolution_clock::now();
-    atsitiktinis_sarasas("studentai10000000.txt", 10000000);
-    auto laikas_pabaiga5 = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> skirtumas5 = laikas_pabaiga5 - laikas_pradzia5;
-    std::cout << "Sugeneruotas failas studentai10000000.txt per " << skirtumas5.count() << " sekundziu." << std::endl;
-
-    /* 
     vector<studentas> grupe;
     studentas A;
-    std::cout << "Kaip norite ivesti studentu duomenis? rankiniu budu/generuoti(1)? Ar nuskaityti is failo(2)? ";
+    std::cout << "Kaip norite ivesti studentu duomenis? rankiniu budu/generuoti(1)? Ar nuskaityti is failo(2)?" << std::endl;
+    std::cout << "Ar norite sugeneruoti atsitiktinius failus?(3) " << std::endl;
     int failo_pasirinkimas;
     std::cin >> failo_pasirinkimas;
     if (failo_pasirinkimas == 1 ) {
-
     std::cout << "Iveskite studentu skaiciu: ";
     int n;
     std::cin >> n;
@@ -123,8 +92,32 @@ int main()
     grupe.push_back(A);
     }
     }
-    else {
-        std::ifstream fd("studentai10000.txt");
+    else if (failo_pasirinkimas == 2) {
+        std::cout<< "Kuri faila norite nuskaityti?"<< std::endl;
+        std::cout<< "1 - studentai1000.txt" << std::endl;
+        std::cout<< "2 - studentai10000.txt" << std::endl;
+        std::cout<< "3 - studentai100000.txt" << std::endl;
+        std::cout<< "4 - studentai1000000.txt" << std::endl;
+        std::cout<< "5 - studentai10000000.txt" << std::endl;
+        int failo_pasirinkimas;
+        string failo_pavadinimas;
+        std::cin >> failo_pasirinkimas;
+        if (failo_pasirinkimas == 1) {
+            failo_pavadinimas = "studentai1000.txt";
+        } else if (failo_pasirinkimas == 2) {
+            failo_pavadinimas = "studentai10000.txt";
+        } else if (failo_pasirinkimas == 3) {
+            failo_pavadinimas = "studentai100000.txt";
+        } else if (failo_pasirinkimas == 4) {
+            failo_pavadinimas = "studentai1000000.txt";
+        } else if (failo_pasirinkimas == 5) {
+            failo_pavadinimas = "studentai10000000.txt";
+        }
+        else {
+            std::cout << "Neteisingas pasirinkimas!" << std::endl;
+            return 1;
+        }
+        std::ifstream fd(failo_pavadinimas);
         if (!fd.is_open()) {
             std::cout << "Nepavyko atidaryti failo!" << std::endl;
             return 1;
@@ -160,6 +153,40 @@ int main()
                 grupe.push_back(A);
         }
     }
+    else {
+        auto laikas_pradzia = std::chrono::high_resolution_clock::now();
+        atsitiktinis_sarasas("studentai1000.txt", 1000);
+        auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> skirtumas = laikas_pabaiga - laikas_pradzia;
+        std::cout << "Sugeneruotas failas studentai1000.txt per " << skirtumas.count() << " sekundziu." << std::endl;
+    
+        auto laikas_pradzia2 = std::chrono::high_resolution_clock::now();
+        atsitiktinis_sarasas("studentai10000.txt", 10000);
+        auto laikas_pabaiga2 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> skirtumas2 = laikas_pabaiga2 - laikas_pradzia2;
+        std::cout << "Sugeneruotas failas studentai10000.txt per " << skirtumas2.count() << " sekundziu." << std::endl;
+    
+        auto laikas_pradzia3 = std::chrono::high_resolution_clock::now();
+        atsitiktinis_sarasas("studentai100000.txt", 100000);
+        auto laikas_pabaiga3 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> skirtumas3 = laikas_pabaiga3 - laikas_pradzia3;
+        std::cout << "Sugeneruotas failas studentai100000.txt per " << skirtumas3.count() << " sekundziu." << std::endl;
+    
+
+        /*auto laikas_pradzia4 = std::chrono::high_resolution_clock::now();
+        atsitiktinis_sarasas("studentai1000000.txt", 1000000);
+        auto laikas_pabaiga4 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> skirtumas4 = laikas_pabaiga4 - laikas_pradzia4;
+        std::cout << "Sugeneruotas failas studentai1000000.txt per " << skirtumas4.count() << " sekundziu." << std::endl;
+    
+        auto laikas_pradzia5 = std::chrono::high_resolution_clock::now();
+        atsitiktinis_sarasas("studentai10000000.txt", 10000000);
+        auto laikas_pabaiga5 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> skirtumas5 = laikas_pabaiga5 - laikas_pradzia5;
+        std::cout << "Sugeneruotas failas studentai10000000.txt per " << skirtumas5.count() << " sekundziu." << std::endl;
+        */
+    }
+    if(failo_pasirinkimas == 1 || failo_pasirinkimas == 2) {
     std::cout << "Kokio isvedimo tipa norite matyti? (1 - vidurkis, 2 - mediana, 3 - abu): ";
     int isvedimo_tipas;
     std::cin >> isvedimo_tipas;
@@ -176,6 +203,7 @@ int main()
     for (studentas B: grupe) {
         printas(B, isvedimo_tipas);
     }
+}
     return 0;
-    */
+    
 }
