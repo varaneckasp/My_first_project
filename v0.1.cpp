@@ -197,7 +197,7 @@ int main()
         int vertinimo_pasirinkimas;
         std::cout << "Pagal ka norite rusiuoti studentus? (1 - mediana, 2 - vidurki)" << std::endl;
         std::cin >> vertinimo_pasirinkimas;
-
+        auto laikas_pradzia = std::chrono::high_resolution_clock::now();
         for (studentas A : grupe) {
             if (vertinimo_pasirinkimas == 1) {
                 if (A.galutinis_mediana < 5) {
@@ -216,7 +216,10 @@ int main()
                 return 1;
             }
         }
-
+        auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
+        skirtumas = laikas_pabaiga - laikas_pradzia;
+        std::cout << "Studentai suskirstyti i dvi grupes per " << skirtumas.count() << " sekundziu." << std::endl;
+        auto laikas_pradzia2 = std::chrono::high_resolution_clock::now();
         std::ofstream failas_vargsiukai("vargsiukai.txt");
         std::ofstream failas_kietiakai("kietiakai.txt");
         if (!failas_vargsiukai.is_open() || !failas_kietiakai.is_open()) {
@@ -255,6 +258,9 @@ int main()
 
         std::sort(vargsiukai.begin(), vargsiukai.end(), palygintiVardus);
         std::sort(kietiakai.begin(), kietiakai.end(), palygintiVardus);
+        auto laikas_pabaiga2 = std::chrono::high_resolution_clock::now();
+        skirtumas = laikas_pabaiga2 - laikas_pradzia2;
+        std::cout << "Failu rasymas uztruko " << skirtumas.count() << " sekundziu." << std::endl;
     }
 
     return 0;
