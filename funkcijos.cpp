@@ -85,26 +85,6 @@ void skaitytiFaila (const std::string &failo_pavadinimas, std::vector<studentas>
                 grupe.push_back(A);
         }
     }
-void skirstytiStudentus(std::vector<studentas> &grupe, std::vector<studentas> &vargsiukai, std::vector<studentas> &kietiakai, int vertinimo_pasirinkimas) {
-     for (const studentas& A : grupe) {
-            if (vertinimo_pasirinkimas == 1) {
-                if (A.galutinis_mediana < 5) {
-                    vargsiukai.push_back(A);
-                } else {
-                    kietiakai.push_back(A);
-                }
-            } else if (vertinimo_pasirinkimas == 2) {
-                if (A.galutinis < 5) {
-                    vargsiukai.push_back(A);
-                } else {
-                    kietiakai.push_back(A);
-                }
-            } else {
-                std::cout << "Neteisingas pasirinkimas!" << std::endl;
-                return;
-            }
-        }
-    }
 void rusiuotiStudentus(std::vector<studentas> &grupe, int rusiuoti_pasirinkimas) {
     if (rusiuoti_pasirinkimas == 1) {
         std::sort(grupe.begin(), grupe.end(), palygintiVardus);

@@ -68,5 +68,8 @@ vcpkg_installed/
 Testing/
 .cache/
 
-studentai1000000.txt
-studentai10000000.txt
+studentai*.txt
+vargsiukai.txt
+kietiakai.txt
+.vscode/
+*.exe
