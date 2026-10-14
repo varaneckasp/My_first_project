@@ -171,55 +171,9 @@ int main()
         int rusiuoti_pasirinkimas;
         std::cin >> rusiuoti_pasirinkimas;
         auto laikas_pradzia2 = std::chrono::high_resolution_clock::now();
-        if (rusiuoti_pasirinkimas == 1) {
-            std::sort(vargsiukai.begin(), vargsiukai.end(), palygintiVardus);
-            std::sort(kietiakai.begin(), kietiakai.end(), palygintiVardus);
-        } else if (rusiuoti_pasirinkimas == 2) {
-            std::sort(vargsiukai.begin(), vargsiukai.end(), palygintiPavardes);
-            std::sort(kietiakai.begin(), kietiakai.end(), palygintiPavardes);
-        } else if (rusiuoti_pasirinkimas == 3) {
-            std::sort(vargsiukai.begin(), vargsiukai.end(), palygintiGalutinius);
-            std::sort(kietiakai.begin(), kietiakai.end(), palygintiGalutinius);
-        } else {
-            std::cout << "Neteisingas pasirinkimas!" << std::endl;
-            return 1;
-        }
-        std::ofstream failas_vargsiukai("vargsiukai.txt");
-        std::ofstream failas_kietiakai("kietiakai.txt");
-        if (!failas_vargsiukai.is_open() || !failas_kietiakai.is_open()) {
-            std::cout << "Nepavyko sukurti failo!" << std::endl;
-            return 1;
-        }
-
-        failas_vargsiukai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20);
-        failas_kietiakai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20);
-
-        if (vertinimo_pasirinkimas == 1) {
-            failas_vargsiukai << std::setw(20) << "Galutinis (med.)" << std::endl;
-            failas_kietiakai << std::setw(20) << "Galutinis (med.)" << std::endl;
-        } else {
-            failas_vargsiukai << std::setw(20) << "Galutinis (vid.)" << std::endl;
-            failas_kietiakai << std::setw(20) << "Galutinis (vid.)" << std::endl;
-        }
-
-        for (studentas A : vargsiukai) {
-            failas_vargsiukai << std::left << std::setw(20) << A.vardas << std::setw(20) << A.pavarde;
-            if (vertinimo_pasirinkimas == 1) {
-                failas_vargsiukai << std::setw(20) <<std::fixed << std::setprecision(2) << A.galutinis_mediana << std::endl;
-            } else {
-                failas_vargsiukai << std::setw(20) << std::fixed << std::setprecision(2) << A.galutinis << std::endl;
-            }
-        }
-
-        for (studentas A : kietiakai) {
-            failas_kietiakai << std::left << std::setw(20) << A.vardas << std::setw(20) << A.pavarde;
-            if (vertinimo_pasirinkimas == 1) {
-                failas_kietiakai << std::setw(20) <<std::fixed << std::setprecision(2) << A.galutinis_mediana << std::endl;
-            } else {
-                failas_kietiakai << std::setw(20) << std::fixed << std::setprecision(2) << A.galutinis << std::endl;
-            }
-        }
-
+        rusiuotiStudentus(vargsiukai, rusiuoti_pasirinkimas);
+        rusiuotiStudentus(kietiakai, rusiuoti_pasirinkimas);
+        rasytiFailus(vargsiukai, kietiakai, vertinimo_pasirinkimas);
         std::sort(vargsiukai.begin(), vargsiukai.end(), palygintiVardus);
         std::sort(kietiakai.begin(), kietiakai.end(), palygintiVardus);
         auto laikas_pabaiga2 = std::chrono::high_resolution_clock::now();
