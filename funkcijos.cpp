@@ -1,4 +1,5 @@
 #include "funkcijos.h"
+#include <algorithm>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -34,7 +35,73 @@ void atsitiktinis_sarasas(const std::string &failo_pavadinimas, int studentu_ska
             fd << std::setw(10) << pazymys;
         }
         int egzaminas = rand() % 10 + 1;
-        fd << std::setw(10) << egzaminas << std::endl;
+        fd << std::setw(10) << egzaminas << '\n';
     }
-
+    fd.close();
 }
+
+void skaiciuotiGalutini(studentas& A) {
+    double suma = 0;
+    for (int i = 0; i < A.pazymiai.size(); i++) {
+        suma += A.pazymiai[i];
+    }
+    if (A.pazymiai.empty()) {
+        A.galutinis = 0;
+        A.galutinis_mediana = 0;
+        return;
+    }
+    double vidurkis = suma / A.pazymiai.size();
+    double mediana;
+    std::sort(A.pazymiai.begin(), A.pazymiai.end());
+    if (A.pazymiai.size() % 2 == 0) {
+        int mid = A.pazymiai.size() / 2;
+        mediana = (A.pazymiai[mid - 1] + A.pazymiai[mid]) / 2.0;
+    } else {
+        int mid = A.pazymiai.size() / 2;
+        mediana = A.pazymiai[mid];
+    }
+    A.galutinis = 0.4 * vidurkis + 0.6 * A.exam;
+    A.galutinis_mediana = 0.4 * mediana + 0.6 * A.exam;
+}
+void skaitytiFaila (const std::string &failo_pavadinimas, std::vector<studentas> &grupe) {
+    std::ifstream fd(failo_pavadinimas);
+        if (!fd.is_open()) {
+            std::cout << "Nepavyko atidaryti failo!" << std::endl;
+            return 1;
+        }
+        std::string eilute;
+        std::getline(fd, eilute);
+        while(std::getline(fd,eilute)) {
+            std::stringstream ss(eilute);
+            studentas A;
+            ss >> A.vardas >> A.pavarde;
+            int pazymys;
+            while (ss >> pazymys) {
+                A.pazymiai.push_back(pazymys);
+            }
+                A.exam = A.pazymiai.back();
+                A.pazymiai.pop_back();
+                skaiciuotiGalutini(A);
+                grupe.push_back(A);
+        }
+    }
+void skirstytiStudentus(std::vector<studentas> &grupe, std::vector<studentas> &vargsiukai, std::vector<studentas> &kietiakai, int vertinimo_pasirinkimas) {
+     for (const studentas& A : grupe) {
+            if (vertinimo_pasirinkimas == 1) {
+                if (A.galutinis_mediana < 5) {
+                    vargsiukai.push_back(A);
+                } else {
+                    kietiakai.push_back(A);
+                }
+            } else if (vertinimo_pasirinkimas == 2) {
+                if (A.galutinis < 5) {
+                    vargsiukai.push_back(A);
+                } else {
+                    kietiakai.push_back(A);
+                }
+            } else {
+                std::cout << "Neteisingas pasirinkimas!" << std::endl;
+                return 1;
+            }
+        }
+    }

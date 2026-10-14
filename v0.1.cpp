@@ -27,81 +27,69 @@ int main()
     int failo_pasirinkimas;
     std::cin >> failo_pasirinkimas;
     if (failo_pasirinkimas == 1 ) {
-    std::cout << "Iveskite studentu skaiciu: ";
-    int n;
-    std::cin >> n;
-    std::cin.ignore();
-    for(int i = 0; i < n; i++) {
-        std::cout << "Iveskite varda ir pavarde per tarpa: ";
-        std::cin >> A.vardas >> A.pavarde;
-        std::cout << "Ar pazymius ivesite ranka (1) ar generuosite atsitiktinius pazymius (2)? ";
-        int pasirinkimas;
-        std::cin >> pasirinkimas;
-        if (pasirinkimas == 2) {
-            int kiek_pazymiu = rand() % 10 + 1;
-            A.pazymiai.clear();
-            for (int j = 0; j < kiek_pazymiu; j++) {
-                int pazimys = rand() % 10 + 1;
-                A.pazymiai.push_back(pazimys);
-            }
-        } else {
-        std::cout << "Iveskite studento namu darbu pazymius po viena spausdami enter, kai baigsite paspauskite enter nieko neivedus: ";
+        std::cout << "Iveskite studentu skaiciu: ";
+        int n;
+        std::cin >> n;
         std::cin.ignore();
-    string ivestis;
-    while (true) {
-        std::getline(std::cin, ivestis);
-        if (ivestis.empty()) {
-            break;
-        }
-        try {
-            int pazimys = std::stoi(ivestis);
-            if (pazimys < 1 || pazimys > 10) {
-                std::cout << "Ivestas netinkamas pazymys. Iveskite pazymi nuo 1 iki 10: ";
+
+        for (int i = 0; i < n; i++) {
+            std::cout << "Iveskite varda ir pavarde per tarpa: ";
+            std::cin >> A.vardas >> A.pavarde;
+
+            std::cout << "Ar pazymius ivesite ranka (1) ar generuosite atsitiktinius pazymius (2)? ";
+            int pasirinkimas;
+            std::cin >> pasirinkimas;
+
+            if (pasirinkimas == 2) {
+                int kiek_pazymiu = rand() % 10 + 1;
+                A.pazymiai.clear();
+                for (int j = 0; j < kiek_pazymiu; j++) {
+                    int pazimys = rand() % 10 + 1;
+                    A.pazymiai.push_back(pazimys);
+                }
             } else {
-                A.pazymiai.push_back(pazimys);
+                std::cout << "Iveskite studento namu darbu pazymius po viena spausdami enter, kai baigsite paspauskite enter nieko neivedus: ";
+                std::cin.ignore();
+                std::string ivestis;
+                while (true) {
+                    std::getline(std::cin, ivestis);
+                    if (ivestis.empty()) {
+                        break;
+                    }
+                    try {
+                        int pazimys = std::stoi(ivestis);
+                        if (pazimys < 1 || pazimys > 10) {
+                            std::cout << "Ivestas netinkamas pazymys. Iveskite pazymi nuo 1 iki 10: ";
+                        } else {
+                            A.pazymiai.push_back(pazimys);
+                        }
+                    }
+                    catch (...) {
+                        std::cout << "Ivestas netinkamas pazymys. Iveskite pazymi nuo 1 iki 10: ";
+                    }
+                }
             }
+
+            std::cout << "Ar norite ivesti ranka (1) ar atsitiktini egzamino rezultata (2)? ";
+            int pasirinkimas_egz;
+            std::cin >> pasirinkimas_egz;
+            if (pasirinkimas_egz == 2) {
+                A.exam = rand() % 10 + 1;
+            } else {
+                std::cout << "Iveskite studento egzamino rezultata: ";
+                std::cin >> A.exam;
+            }
+            skaiciuotiGalutini(A);
+            grupe.push_back(A);
         }
-        catch (...) {
-            std::cout << "Ivestas netinkamas pazymys. Iveskite pazymi nuo 1 iki 10: ";
-        }
-    }
-    }
-    std::cout <<"Ar norite ivesti ranka (1) ar atsitiktini egzamino rezultata (2)? ";
-    int pasirinkimas_egz;
-    std::cin >> pasirinkimas_egz;
-    if (pasirinkimas_egz == 2) {
-        A.exam = rand() % 10 + 1;
-    } else {
-        std::cout << "Iveskite studento egzamino rezultata: ";
-        std::cin >> A.exam;
-    }
-    
-    double suma = 0;
-    for (int i = 0; i < A.pazymiai.size(); i++) {
-        suma += A.pazymiai[i];
-    }
-    double vidurkis = suma / A.pazymiai.size();
-     double mediana;
-     std::sort(A.pazymiai.begin(), A.pazymiai.end());
-    if (A.pazymiai.size() % 2 == 0) {
-        int mid = A.pazymiai.size() / 2;
-        mediana = (A.pazymiai[mid - 1] + A.pazymiai[mid]) / 2.0;
-    } else {
-        int mid = A.pazymiai.size() / 2;
-        mediana = A.pazymiai[mid];
-    }
-    A.galutinis = 0.4 * vidurkis + 0.6 * A.exam;
-    A.galutinis_mediana = 0.4 * mediana + 0.6 * A.exam;
-    grupe.push_back(A);
-    }
-    }
-    else if (failo_pasirinkimas == 2) {
+    } else if (failo_pasirinkimas == 2) {
         std::cout<< "Kuri faila norite nuskaityti?"<< std::endl;
         std::cout<< "1 - studentai1000.txt" << std::endl;
         std::cout<< "2 - studentai10000.txt" << std::endl;
         std::cout<< "3 - studentai100000.txt" << std::endl;
         std::cout<< "4 - studentai1000000.txt" << std::endl;
         std::cout<< "5 - studentai10000000.txt" << std::endl;
+        std::cout<< "6 - ivesti savo failo pavadinimas:" << std::endl;
         int failo_pav_pasirinkimas;
         string failo_pavadinimas;
         std::cin >> failo_pav_pasirinkimas;
@@ -115,114 +103,74 @@ int main()
             failo_pavadinimas = "studentai1000000.txt";
         } else if (failo_pav_pasirinkimas == 5) {
             failo_pavadinimas = "studentai10000000.txt";
+        } else if (failo_pav_pasirinkimas == 6) {
+            std::cout << "Iveskite savo failo pavadinima: ";
+            std::cin >> failo_pavadinimas;
         }
         else {
             std::cout << "Neteisingas pasirinkimas!" << std::endl;
             return 1;
         }
         auto laikas_pradzia = std::chrono::high_resolution_clock::now();
-        std::ifstream fd(failo_pavadinimas);
-        if (!fd.is_open()) {
-            std::cout << "Nepavyko atidaryti failo!" << std::endl;
-            return 1;
-        }
-        std::string eilute;
-        std::getline(fd, eilute);
-        while(std::getline(fd,eilute)) {
-            std::stringstream ss(eilute);
-            studentas A;
-            ss >> A.vardas >> A.pavarde;
-            int pazymys;
-            while (ss >> pazymys) {
-                A.pazymiai.push_back(pazymys);
-            }
-                A.exam = A.pazymiai.back();
-                A.pazymiai.pop_back();
-                double suma=0;
-                for (int i = 0; i < A.pazymiai.size(); i++) {
-                    suma += A.pazymiai[i];
-                }
-                double vidurkis = suma / A.pazymiai.size();
-                std::sort(A.pazymiai.begin(), A.pazymiai.end());
-                double mediana;
-                if (A.pazymiai.size() % 2 == 0) {
-                    int mid = A.pazymiai.size() / 2;
-                    mediana = (A.pazymiai[mid - 1] + A.pazymiai[mid]) / 2.0;
-                } else {
-                    int mid = A.pazymiai.size() / 2;
-                    mediana = A.pazymiai[mid];
-                }
-                A.galutinis = 0.4 * vidurkis + 0.6 * A.exam;
-                A.galutinis_mediana = 0.4 * mediana + 0.6 * A.exam;
-                grupe.push_back(A);
-        }
+        skaitytiFaila(failo_pavadinimas, grupe);
         auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
         skirtumas = laikas_pabaiga - laikas_pradzia;
         std::cout << "Failas " << failo_pavadinimas << " nuskaitytas per " << skirtumas.count() << " sekundziu." << std::endl;
     }
     else {
-        auto laikas_pradzia = std::chrono::high_resolution_clock::now();
-        atsitiktinis_sarasas("studentai1000.txt", 1000);
-        auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
-        skirtumas = laikas_pabaiga - laikas_pradzia;
-        std::cout << "Sugeneruotas failas studentai1000.txt per " << skirtumas.count() << " sekundziu." << std::endl;
-    
-        auto laikas_pradzia2 = std::chrono::high_resolution_clock::now();
-        atsitiktinis_sarasas("studentai10000.txt", 10000);
-        auto laikas_pabaiga2 = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> skirtumas2 = laikas_pabaiga2 - laikas_pradzia2;
-        std::cout << "Sugeneruotas failas studentai10000.txt per " << skirtumas2.count() << " sekundziu." << std::endl;
-    
-        auto laikas_pradzia3 = std::chrono::high_resolution_clock::now();
-        atsitiktinis_sarasas("studentai100000.txt", 100000);
-        auto laikas_pabaiga3 = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> skirtumas3 = laikas_pabaiga3 - laikas_pradzia3;
-        std::cout << "Sugeneruotas failas studentai100000.txt per " << skirtumas3.count() << " sekundziu." << std::endl;
-    
-
-        /*auto laikas_pradzia4 = std::chrono::high_resolution_clock::now();
-        atsitiktinis_sarasas("studentai1000000.txt", 1000000);
-        auto laikas_pabaiga4 = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> skirtumas4 = laikas_pabaiga4 - laikas_pradzia4;
-        std::cout << "Sugeneruotas failas studentai1000000.txt per " << skirtumas4.count() << " sekundziu." << std::endl;
-    
-        auto laikas_pradzia5 = std::chrono::high_resolution_clock::now();
-        atsitiktinis_sarasas("studentai10000000.txt", 10000000);
-        auto laikas_pabaiga5 = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> skirtumas5 = laikas_pabaiga5 - laikas_pradzia5;
-        std::cout << "Sugeneruotas failas studentai10000000.txt per " << skirtumas5.count() << " sekundziu." << std::endl;
-        */
+        std::cout << "Kiek studentu norite sugeneruoti?" << std::endl;
+        std::cout << "1 - 1000 studentu" << std::endl;
+        std::cout << "2 - 10000 studentu" << std::endl;
+        std::cout << "3 - 100000 studentu" << std::endl;
+        std::cout << "4 - 1000000 studentu" << std::endl;
+        std::cout << "5 - 10000000 studentu" << std::endl;
+        int studentu_skaicius;
+        std::cin >> studentu_skaicius;
+        if (studentu_skaicius ==1) {
+            auto laikas_pradzia = std::chrono::high_resolution_clock::now();
+            atsitiktinis_sarasas("studentai1000.txt", 1000);
+            auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
+            skirtumas = laikas_pabaiga - laikas_pradzia;
+            std::cout << "Sugeneruotas failas studentai1000.txt per " << skirtumas.count() << " sekundziu." << std::endl;
+        } else if (studentu_skaicius == 2) {
+            auto laikas_pradzia = std::chrono::high_resolution_clock::now();
+            atsitiktinis_sarasas("studentai10000.txt", 10000);
+            auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
+            skirtumas = laikas_pabaiga - laikas_pradzia;
+            std::cout << "Sugeneruotas failas studentai10000.txt per " << skirtumas.count() << " sekundziu." << std::endl;
+        } else if (studentu_skaicius == 3) {
+            auto laikas_pradzia = std::chrono::high_resolution_clock::now();
+            atsitiktinis_sarasas("studentai100000.txt", 100000);
+            auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
+            skirtumas = laikas_pabaiga - laikas_pradzia;
+            std::cout << "Sugeneruotas failas studentai100000.txt per " << skirtumas.count() << " sekundziu." << std::endl;
+        } else if (studentu_skaicius == 4) {
+            auto laikas_pradzia = std::chrono::high_resolution_clock::now();
+            atsitiktinis_sarasas("studentai1000000.txt", 1000000);
+            auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
+            skirtumas = laikas_pabaiga - laikas_pradzia;
+            std::cout << "Sugeneruotas failas studentai1000000.txt per " << skirtumas.count() << " sekundziu." << std::endl;
+        } else if (studentu_skaicius == 5) {
+            auto laikas_pradzia = std::chrono::high_resolution_clock::now();
+            atsitiktinis_sarasas("studentai10000000.txt", 10000000);
+            auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
+            skirtumas = laikas_pabaiga - laikas_pradzia;
+            std::cout << "Sugeneruotas failas studentai10000000.txt per " << skirtumas.count() << " sekundziu." << std::endl;
+        }
     }
     if (failo_pasirinkimas == 1 || failo_pasirinkimas == 2) {
         int vertinimo_pasirinkimas;
         std::cout << "Pagal ka norite rusiuoti studentus? (1 - mediana, 2 - vidurki)" << std::endl;
         std::cin >> vertinimo_pasirinkimas;
         auto laikas_pradzia = std::chrono::high_resolution_clock::now();
-        for (studentas A : grupe) {
-            if (vertinimo_pasirinkimas == 1) {
-                if (A.galutinis_mediana < 5) {
-                    vargsiukai.push_back(A);
-                } else {
-                    kietiakai.push_back(A);
-                }
-            } else if (vertinimo_pasirinkimas == 2) {
-                if (A.galutinis < 5) {
-                    vargsiukai.push_back(A);
-                } else {
-                    kietiakai.push_back(A);
-                }
-            } else {
-                std::cout << "Neteisingas pasirinkimas!" << std::endl;
-                return 1;
-            }
-        }
+        skirstytiStudentus(grupe, vargsiukai, kietiakai, vertinimo_pasirinkimas);
         auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
         skirtumas = laikas_pabaiga - laikas_pradzia;
         std::cout << "Studentai suskirstyti i dvi grupes per " << skirtumas.count() << " sekundziu." << std::endl;
-        auto laikas_pradzia2 = std::chrono::high_resolution_clock::now();
         std::cout << "Pagal ka norite rusiuoti studentus? (1 - vardas, 2 - pavarde, 3 - galutinis)" << std::endl;
         int rusiuoti_pasirinkimas;
         std::cin >> rusiuoti_pasirinkimas;
+        auto laikas_pradzia2 = std::chrono::high_resolution_clock::now();
         if (rusiuoti_pasirinkimas == 1) {
             std::sort(vargsiukai.begin(), vargsiukai.end(), palygintiVardus);
             std::sort(kietiakai.begin(), kietiakai.end(), palygintiVardus);
