@@ -13,14 +13,12 @@
 using std::string;
 using std::vector;
 
-int main() 
-{
+template <typename T> void vykdytiPrograma(){
+    T grupe;
+    T vargsiukai;
+    T kietiakai;
     srand(time(0));
     std::chrono::duration<double> skirtumas;
-
-    vector<studentas> vargsiukai;
-    vector<studentas> kietiakai;
-    vector<studentas> grupe;
     studentas A;
     std::cout << "Kaip norite ivesti studentu duomenis? rankiniu budu/generuoti(1)? Ar nuskaityti is failo(2)?" << std::endl;
     std::cout << "Ar norite sugeneruoti atsitiktinius failus?(3) " << std::endl;
@@ -109,7 +107,7 @@ int main()
         }
         else {
             std::cout << "Neteisingas pasirinkimas!" << std::endl;
-            return 1;
+            return;
         }
         auto laikas_pradzia = std::chrono::high_resolution_clock::now();
         skaitytiFaila(failo_pavadinimas, grupe);
@@ -174,12 +172,24 @@ int main()
         rusiuotiStudentus(vargsiukai, rusiuoti_pasirinkimas);
         rusiuotiStudentus(kietiakai, rusiuoti_pasirinkimas);
         rasytiFailus(vargsiukai, kietiakai, vertinimo_pasirinkimas);
-        std::sort(vargsiukai.begin(), vargsiukai.end(), palygintiVardus);
-        std::sort(kietiakai.begin(), kietiakai.end(), palygintiVardus);
+        rusiuotiStudentus(vargsiukai, rusiuoti_pasirinkimas);
+        rusiuotiStudentus(kietiakai, rusiuoti_pasirinkimas);
         auto laikas_pabaiga2 = std::chrono::high_resolution_clock::now();
         skirtumas = laikas_pabaiga2 - laikas_pradzia2;
         std::cout << "Failu rasymas uztruko " << skirtumas.count() << " sekundziu." << std::endl;
     }
-
-    return 0;
+}
+int main() 
+{
+    int pasirinkimas;
+    std::cout << "Pasirinkite konteinerio tipa: (1 - vector, 2 - list)" << std::endl;
+    std::cin >> pasirinkimas;
+    if (pasirinkimas == 1) {
+        vykdytiPrograma<std::vector<studentas>>();
+    } else if (pasirinkimas == 2) {
+        vykdytiPrograma<std::list<studentas>>();
+    } else {
+        std::cout << "Neteisingas pasirinkimas!" << std::endl;
+        return 1;
+    }
 }
