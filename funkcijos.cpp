@@ -97,40 +97,15 @@ void rusiuotiStudentus(std::vector<studentas> &grupe, int rusiuoti_pasirinkimas)
         return;
     }
 }
-void rasytiFailus(std::vector<studentas> &vargsiukai, std::vector<studentas> &kietiakai, int vertinimo_pasirinkimas) {
-        std::ofstream failas_vargsiukai("vargsiukai.txt");
-        std::ofstream failas_kietiakai("kietiakai.txt");
-        if (!failas_vargsiukai.is_open() || !failas_kietiakai.is_open()) {
-            std::cout << "Nepavyko sukurti failo!" << std::endl;
-            return;
-        }
-
-        failas_vargsiukai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20);
-        failas_kietiakai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20);
-
-        if (vertinimo_pasirinkimas == 1) {
-            failas_vargsiukai << std::setw(20) << "Galutinis (med.)" << std::endl;
-            failas_kietiakai << std::setw(20) << "Galutinis (med.)" << std::endl;
-        } else {
-            failas_vargsiukai << std::setw(20) << "Galutinis (vid.)" << std::endl;
-            failas_kietiakai << std::setw(20) << "Galutinis (vid.)" << std::endl;
-        }
-
-        for (const studentas& A : vargsiukai) {
-            failas_vargsiukai << std::left << std::setw(20) << A.vardas << std::setw(20) << A.pavarde;
-            if (vertinimo_pasirinkimas == 1) {
-                failas_vargsiukai << std::setw(20) <<std::fixed << std::setprecision(2) << A.galutinis_mediana << std::endl;
-            } else {
-                failas_vargsiukai << std::setw(20) << std::fixed << std::setprecision(2) << A.galutinis << std::endl;
-            }
-        }
-
-        for (studentas A : kietiakai) {
-            failas_kietiakai << std::left << std::setw(20) << A.vardas << std::setw(20) << A.pavarde;
-            if (vertinimo_pasirinkimas == 1) {
-                failas_kietiakai << std::setw(20) <<std::fixed << std::setprecision(2) << A.galutinis_mediana << std::endl;
-            } else {
-                failas_kietiakai << std::setw(20) << std::fixed << std::setprecision(2) << A.galutinis << std::endl;
-            }
-        }
+void rusiuotiStudentus(std::list<studentas> &grupe, int rusiuoti_pasirinkimas) {
+    if (rusiuoti_pasirinkimas == 1) {
+        grupe.sort(palygintiVardus);
+    } else if (rusiuoti_pasirinkimas == 2) {
+        grupe.sort(palygintiPavardes);
+    } else if (rusiuoti_pasirinkimas == 3) {
+        grupe.sort(palygintiGalutinius);
+    } else {
+        std::cout << "Neteisingas pasirinkimas!" << std::endl;
+        return;
     }
+}

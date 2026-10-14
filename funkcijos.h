@@ -3,6 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <list>
+#include <fstream>
+#include <iomanip>
 bool palygintiVardus(const studentas &a, const studentas &b);
 bool palygintiPavardes(const studentas &a, const studentas &b);
 bool palygintiGalutinius(const studentas &a, const studentas &b);
@@ -54,4 +57,42 @@ void skirstytiStudentus(const T&grupe, T&vargsiukai, T&kietiakai, int vertinimo_
         }
     }
 void rusiuotiStudentus(std::vector<studentas> &grupe, int rusiuoti_pasirinkimas);
-void rasytiFailus(std::vector<studentas> &vargsiukai, std::vector<studentas> &kietiakai, int vertinimo_pasirinkimas);
+void rusiuotiStudentus(std::list<studentas> &grupe, int rusiuoti_pasirinkimas);
+template <typename T>
+void rasytiFailus(const T& vargsiukai, const T& kietiakai, int vertinimo_pasirinkimas) {
+        std::ofstream failas_vargsiukai("vargsiukai.txt");
+        std::ofstream failas_kietiakai("kietiakai.txt");
+        if (!failas_vargsiukai.is_open() || !failas_kietiakai.is_open()) {
+            std::cout << "Nepavyko sukurti failo!" << std::endl;
+            return;
+        }
+
+        failas_vargsiukai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20);
+        failas_kietiakai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20);
+
+        if (vertinimo_pasirinkimas == 1) {
+            failas_vargsiukai << std::setw(20) << "Galutinis (med.)" << std::endl;
+            failas_kietiakai << std::setw(20) << "Galutinis (med.)" << std::endl;
+        } else {
+            failas_vargsiukai << std::setw(20) << "Galutinis (vid.)" << std::endl;
+            failas_kietiakai << std::setw(20) << "Galutinis (vid.)" << std::endl;
+        }
+
+        for (const studentas& A : vargsiukai) {
+            failas_vargsiukai << std::left << std::setw(20) << A.vardas << std::setw(20) << A.pavarde;
+            if (vertinimo_pasirinkimas == 1) {
+                failas_vargsiukai << std::setw(20) <<std::fixed << std::setprecision(2) << A.galutinis_mediana << std::endl;
+            } else {
+                failas_vargsiukai << std::setw(20) << std::fixed << std::setprecision(2) << A.galutinis << std::endl;
+            }
+        }
+
+        for (studentas A : kietiakai) {
+            failas_kietiakai << std::left << std::setw(20) << A.vardas << std::setw(20) << A.pavarde;
+            if (vertinimo_pasirinkimas == 1) {
+                failas_kietiakai << std::setw(20) <<std::fixed << std::setprecision(2) << A.galutinis_mediana << std::endl;
+            } else {
+                failas_kietiakai << std::setw(20) << std::fixed << std::setprecision(2) << A.galutinis << std::endl;
+            }
+        }
+    }
