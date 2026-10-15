@@ -80,6 +80,7 @@ template <typename T> void vykdytiPrograma(){
             }
             skaiciuotiGalutini(A);
             grupe.push_back(A);
+            std::cout << "Studento adresas atmintyje: " << &grupe.back() << '\n';
         }
     } else if (failo_pasirinkimas == 2) {
         std::cout<< "Kuri faila norite nuskaityti?"<< std::endl;
@@ -117,7 +118,9 @@ template <typename T> void vykdytiPrograma(){
         }
         rezervuotiVieta(grupe, studentu_skaicius);
         auto laikas_pradzia = std::chrono::high_resolution_clock::now();
-        skaitytiFaila(failo_pavadinimas, grupe);
+        if(!skaitytiFaila(failo_pavadinimas, grupe)) {
+        return;
+        }
         auto laikas_pabaiga = std::chrono::high_resolution_clock::now();
         skirtumas = laikas_pabaiga - laikas_pradzia;
         std::cout << "Failas " << failo_pavadinimas << " nuskaitytas per " << skirtumas.count() << " sekundziu." << std::endl;
@@ -182,7 +185,10 @@ template <typename T> void vykdytiPrograma(){
         skirtumas = laikas_pabaiga2 - laikas_pradzia2;
         std::cout << "Studentai surusiuoti pagal pasirinkta kriteriju per " << skirtumas.count() << " sekundziu." << std::endl;
         auto laikas_pradzia3 = std::chrono::high_resolution_clock::now();
-        rasytiFailus(vargsiukai, kietiakai, vertinimo_pasirinkimas);
+        if(!rasytiFailus(vargsiukai, kietiakai, vertinimo_pasirinkimas)){
+            std::cout<< "Nepavyko surasyti rezultatu!"<< '\n';
+            return;
+        }
         auto laikas_pabaiga3 = std::chrono::high_resolution_clock::now();
         skirtumas = laikas_pabaiga3 - laikas_pradzia3;
         std::cout << "Failu rasymas uztruko " << skirtumas.count() << " sekundziu." << std::endl;

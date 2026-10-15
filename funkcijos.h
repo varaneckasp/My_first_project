@@ -12,11 +12,11 @@ bool palygintiGalutinius(const studentas &a, const studentas &b);
 void atsitiktinis_sarasas(const std::string &failo_pavadinimas, int studentu_skaicius);
 void skaiciuotiGalutini(studentas& A);
 template <typename T>
-void skaitytiFaila (const std::string &failo_pavadinimas, T &grupe) {
+bool skaitytiFaila (const std::string &failo_pavadinimas, T &grupe) {
     std::ifstream fd(failo_pavadinimas);
         if (!fd.is_open()) {
             std::cout << "Nepavyko atidaryti failo!" << std::endl;
-            return;
+            return false;
         }
         std::string eilute;
         std::getline(fd, eilute);
@@ -38,7 +38,9 @@ void skaitytiFaila (const std::string &failo_pavadinimas, T &grupe) {
                 A.pazymiai.pop_back();
                 skaiciuotiGalutini(A);
                 grupe.push_back(A);
+               
         }
+         return true;
     }
 template <typename T>
 void skirstytiStudentus(const T&grupe, T&vargsiukai, T&kietiakai, int vertinimo_pasirinkimas){
@@ -64,23 +66,23 @@ void skirstytiStudentus(const T&grupe, T&vargsiukai, T&kietiakai, int vertinimo_
 void rusiuotiStudentus(std::vector<studentas> &grupe, int rusiuoti_pasirinkimas);
 void rusiuotiStudentus(std::list<studentas> &grupe, int rusiuoti_pasirinkimas);
 template <typename T>
-void rasytiFailus(const T& vargsiukai, const T& kietiakai, int vertinimo_pasirinkimas) {
+bool rasytiFailus(const T& vargsiukai, const T& kietiakai, int vertinimo_pasirinkimas) {
         std::ofstream failas_vargsiukai("vargsiukai.txt");
         std::ofstream failas_kietiakai("kietiakai.txt");
         if (!failas_vargsiukai.is_open() || !failas_kietiakai.is_open()) {
             std::cout << "Nepavyko sukurti failo!" << std::endl;
-            return;
+            return false;
         }
 
         failas_vargsiukai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20);
         failas_kietiakai << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde" << std::setw(20);
 
         if (vertinimo_pasirinkimas == 1) {
-            failas_vargsiukai << std::setw(20) << "Galutinis (med.)\n";
-            failas_kietiakai << std::setw(20) << "Galutinis (med.)\n";
+            failas_vargsiukai << std::setw(20) << "Galutinis (med.)"<< '\n';
+            failas_kietiakai << std::setw(20) << "Galutinis (med.)"<< '\n';
         } else {
-            failas_vargsiukai << std::setw(20) << "Galutinis (vid.)\n";
-            failas_kietiakai << std::setw(20) << "Galutinis (vid.)\n";
+            failas_vargsiukai << std::setw(20) << "Galutinis (vid.)"<< '\n';
+            failas_kietiakai << std::setw(20) << "Galutinis (vid.)"<< '\n';
         }
 
         for (const studentas& A : vargsiukai) {
@@ -100,6 +102,9 @@ void rasytiFailus(const T& vargsiukai, const T& kietiakai, int vertinimo_pasirin
                 failas_kietiakai << std::setw(20) << std::fixed << std::setprecision(2) << A.galutinis << '\n';
             }
         }
+        failas_vargsiukai.flush();
+        failas_kietiakai.flush();
+        return failas_vargsiukai.good() && failas_kietiakai.good();
     }
     void rezervuotiVieta(std::vector<studentas>& grupe, size_t kiekis);
     void rezervuotiVieta(std::list<studentas>& grupe, size_t kiekis);
