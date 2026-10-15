@@ -20,6 +20,7 @@ template <typename T> void vykdytiPrograma(){
     srand(time(0));
     std::chrono::duration<double> skirtumas;
     studentas A;
+    size_t studentu_skaicius = 0;
     std::cout << "Kaip norite ivesti studentu duomenis? rankiniu budu/generuoti(1)? Ar nuskaityti is failo(2)?" << std::endl;
     std::cout << "Ar norite sugeneruoti atsitiktinius failus?(3) " << std::endl;
     int failo_pasirinkimas;
@@ -93,14 +94,19 @@ template <typename T> void vykdytiPrograma(){
         std::cin >> failo_pav_pasirinkimas;
         if (failo_pav_pasirinkimas == 1) {
             failo_pavadinimas = "studentai1000.txt";
+            studentu_skaicius = 1000;
         } else if (failo_pav_pasirinkimas == 2) {
             failo_pavadinimas = "studentai10000.txt";
+            studentu_skaicius = 10000;
         } else if (failo_pav_pasirinkimas == 3) {
             failo_pavadinimas = "studentai100000.txt";
+            studentu_skaicius = 100000;
         } else if (failo_pav_pasirinkimas == 4) {
             failo_pavadinimas = "studentai1000000.txt";
+            studentu_skaicius = 1000000;
         } else if (failo_pav_pasirinkimas == 5) {
             failo_pavadinimas = "studentai10000000.txt";
+            studentu_skaicius = 10000000;
         } else if (failo_pav_pasirinkimas == 6) {
             std::cout << "Iveskite savo failo pavadinima: ";
             std::cin >> failo_pavadinimas;
@@ -109,6 +115,7 @@ template <typename T> void vykdytiPrograma(){
             std::cout << "Neteisingas pasirinkimas!" << std::endl;
             return;
         }
+        rezervuotiVieta(grupe, studentu_skaicius);
         auto laikas_pradzia = std::chrono::high_resolution_clock::now();
         skaitytiFaila(failo_pavadinimas, grupe);
         auto laikas_pabaiga = std::chrono::high_resolution_clock::now();

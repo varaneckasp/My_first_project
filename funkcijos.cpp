@@ -109,3 +109,9 @@ void rusiuotiStudentus(std::list<studentas> &grupe, int rusiuoti_pasirinkimas) {
         return;
     }
 }
+void rezervuotiVieta(std::vector<studentas>& grupe, size_t kiekis){
+    grupe.reserve(kiekis);
+}
+void rezervuotiVieta(std::list<studentas>& grupe, size_t kiekis){
+    // std::list does not support reserve
+}
