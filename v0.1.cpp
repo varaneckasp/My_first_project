@@ -171,11 +171,13 @@ template <typename T> void vykdytiPrograma(){
         auto laikas_pradzia2 = std::chrono::high_resolution_clock::now();
         rusiuotiStudentus(vargsiukai, rusiuoti_pasirinkimas);
         rusiuotiStudentus(kietiakai, rusiuoti_pasirinkimas);
-        rasytiFailus(vargsiukai, kietiakai, vertinimo_pasirinkimas);
-        rusiuotiStudentus(vargsiukai, rusiuoti_pasirinkimas);
-        rusiuotiStudentus(kietiakai, rusiuoti_pasirinkimas);
         auto laikas_pabaiga2 = std::chrono::high_resolution_clock::now();
         skirtumas = laikas_pabaiga2 - laikas_pradzia2;
+        std::cout << "Studentai surusiuoti pagal pasirinkta kriteriju per " << skirtumas.count() << " sekundziu." << std::endl;
+        auto laikas_pradzia3 = std::chrono::high_resolution_clock::now();
+        rasytiFailus(vargsiukai, kietiakai, vertinimo_pasirinkimas);
+        auto laikas_pabaiga3 = std::chrono::high_resolution_clock::now();
+        skirtumas = laikas_pabaiga3 - laikas_pradzia3;
         std::cout << "Failu rasymas uztruko " << skirtumas.count() << " sekundziu." << std::endl;
     }
 }
