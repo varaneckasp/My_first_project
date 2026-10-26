@@ -62,6 +62,27 @@ void skirstytiStudentus(const T&grupe, T&vargsiukai, T&kietiakai, int vertinimo_
             }
         }
     }
+template <typename T>
+void skirstytiStudentus2(T&grupe, T&vargsiukai, int vertinimo_pasirinkimas){
+    auto it = grupe.begin();
+        while(it != grupe.end()) {
+            bool arVargsiukas;
+            if (vertinimo_pasirinkimas == 1) {
+                arVargsiukas = (it->galutinis_mediana < 5);
+            } else if (vertinimo_pasirinkimas == 2) {
+                arVargsiukas = (it->galutinis < 5);
+            } else {
+                std::cout << "Neteisingas pasirinkimas!\n";
+                return;
+            }
+            if (arVargsiukas) {
+                vargsiukai.push_back(*it);
+                it = grupe.erase(it);
+            } else {
+                ++it;
+            }
+        }
+}
 void rusiuotiStudentus(std::vector<studentas> &grupe, int rusiuoti_pasirinkimas);
 void rusiuotiStudentus(std::list<studentas> &grupe, int rusiuoti_pasirinkimas);
 template <typename T>
