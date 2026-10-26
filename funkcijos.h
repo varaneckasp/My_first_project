@@ -22,7 +22,6 @@ bool skaitytiFaila (const std::string &failo_pavadinimas, T &grupe) {
         std::getline(fd, eilute);
         std::stringstream ss;
         while(std::getline(fd,eilute)) {
-            //std::stringstream ss(eilute);
             ss.clear();
             ss.str(eilute);
             studentas A;
