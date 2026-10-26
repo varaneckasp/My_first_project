@@ -85,6 +85,42 @@ void skaitytiFaila (const std::string &failo_pavadinimas, std::vector<studentas>
                 grupe.push_back(A);
         }
     }
+    void skirstytiStudentus3(std::vector<studentas>& grupe,std::vector<studentas>& vargsiukai,int vertinimo_pasirinkimas) {
+
+    auto riba = std::partition(grupe.begin(), grupe.end(),
+        [vertinimo_pasirinkimas](const studentas& A) {
+            if (vertinimo_pasirinkimas == 1) {
+                return A.galutinis_mediana >= 5;
+            } else {
+                return A.galutinis >= 5;
+            }
+        });
+
+    vargsiukai.insert(vargsiukai.end(), riba, grupe.end());
+
+    grupe.erase(riba, grupe.end());
+}
+void skirstytiStudentus3(std::list<studentas>& grupe,std::list<studentas>& vargsiukai,int vertinimo_pasirinkimas) {
+    auto it = grupe.begin();
+    while (it != grupe.end()) {
+        bool arVargsiukas;
+        if (vertinimo_pasirinkimas != 1 && vertinimo_pasirinkimas != 2) {
+        std::cout << "Neteisingas pasirinkimas!\n";
+        return;
+        }
+        if (vertinimo_pasirinkimas == 1) {
+            arVargsiukas = (it->galutinis_mediana < 5);
+        } else {
+            arVargsiukas = (it->galutinis < 5);
+        }
+        if (arVargsiukas) {
+            auto dabartinis = it++;
+            vargsiukai.splice(vargsiukai.end(), grupe, dabartinis);
+        } else {
+            ++it;
+        }
+    }
+}
 void rusiuotiStudentus(std::vector<studentas> &grupe, int rusiuoti_pasirinkimas) {
     if (rusiuoti_pasirinkimas == 1) {
         std::sort(grupe.begin(), grupe.end(), palygintiVardus);

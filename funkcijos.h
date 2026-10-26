@@ -83,6 +83,8 @@ void skirstytiStudentus2(T&grupe, T&vargsiukai, int vertinimo_pasirinkimas){
             }
         }
 }
+void skirstytiStudentus3(std::vector<studentas>& grupe,std::vector<studentas>& vargsiukai,int vertinimo_pasirinkimas);
+void skirstytiStudentus3(std::list<studentas>& grupe,std::list<studentas>& vargsiukai,int vertinimo_pasirinkimas);
 void rusiuotiStudentus(std::vector<studentas> &grupe, int rusiuoti_pasirinkimas);
 void rusiuotiStudentus(std::list<studentas> &grupe, int rusiuoti_pasirinkimas);
 template <typename T>

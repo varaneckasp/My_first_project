@@ -171,13 +171,15 @@ template <typename T> void vykdytiPrograma(){
         std::cout << "Pagal ka norite rusiuoti studentus? (1 - mediana, 2 - vidurki)" << std::endl;
         std::cin >> vertinimo_pasirinkimas;
         int strategija;
-        std::cout<<"Pasirinkite strategija: 1 - skirstyti studentus i dvi grupes, 2 - skirstyti studentus i viena grupe ir is jos istrinti vargsiukus"<<std::endl;
+        std::cout<<"Pasirinkite strategija: 1 - skirstyti studentus i dvi grupes, 2 - skirstyti studentus i viena grupe ir is jos istrinti vargsiukus, 3 - naudoti std::partition"<<std::endl;
         std::cin>>strategija;
         auto laikas_pradzia = std::chrono::high_resolution_clock::now();
         if(strategija == 1){
             skirstytiStudentus(grupe, vargsiukai, kietiakai, vertinimo_pasirinkimas);
         } else if(strategija == 2){
             skirstytiStudentus2(grupe, vargsiukai, vertinimo_pasirinkimas);
+        } else if(strategija == 3){
+            skirstytiStudentus3(grupe, vargsiukai, vertinimo_pasirinkimas);
         } else {
             std::cout << "Neteisingas pasirinkimas!" << std::endl;
             return;
@@ -192,7 +194,7 @@ template <typename T> void vykdytiPrograma(){
         rusiuotiStudentus(vargsiukai, rusiuoti_pasirinkimas);
         if (strategija == 1) {
             rusiuotiStudentus(kietiakai, rusiuoti_pasirinkimas);
-        } else if (strategija == 2) {
+        } else {
             rusiuotiStudentus(grupe, rusiuoti_pasirinkimas);
         }
         auto laikas_pabaiga2 = std::chrono::high_resolution_clock::now();
@@ -202,7 +204,7 @@ template <typename T> void vykdytiPrograma(){
         bool arRezultataiSurasyti;
         if (strategija == 1) {
             arRezultataiSurasyti = rasytiFailus(vargsiukai, kietiakai, vertinimo_pasirinkimas);
-        } else if (strategija == 2) {
+        } else if (strategija == 2 || strategija == 3) {
             arRezultataiSurasyti = rasytiFailus(vargsiukai, grupe, vertinimo_pasirinkimas);
         } else {
             std::cout<< "Nepavyko surasyti rezultatu!"<< '\n';
