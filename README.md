@@ -116,3 +116,40 @@ Testavimas atliktas su 1 000, 10 000 ir 100 000 studentų failais. Visi bandymai
 | 1 | 0.01462300 | 0.01922810 |
 | 2 | 11.46880000 | 0.00912214 |
 | 3 | 0.00876394 | 0.00371986 |
+
+### Rezultatų analizė
+
+Pagal gautus rezultatus greičiausiai veikė 3 strategija su abiem konteineriais. Lėčiausia buvo 2 strategija su vector, nes trinant studentus reikia perstumti likusius elementus. Su list ši problema nepasireiškia, todėl jis veikė greičiau.
+
+3 strategijoje naudojami partition ir splice metodai leido pasiekti geresnius rezultatus. Didėjant studentų skaičiui, skirtumai tarp strategijų tapo dar didesni.
+
+### Išvados
+
+Atlikus bandymus matyti, kad programos greitis priklauso ne tik nuo konteinerio, bet ir nuo pasirinktos skirstymo strategijos. Visuose atliktuose bandymuose geriausiai pasirodė 3 strategija.
+
+
+### Testavimo nuotraukos
+
+1000 studentų, vector:
+
+![Vector 1000](images/vector2_1000.png)
+
+1000 studentų, list:
+
+![List 1000](images/list2_1000.png)
+
+10 000 studentų, vector:
+
+![Vector 10 000](images/vector2_10000.png)
+
+10 000 studentų, list:
+
+![List 10 000](images/list2_10000.png)
+
+100 000 studentų, vector:
+
+![Vector 100 000](images/vector2_100000.png)
+
+100 000 studentų, list:
+
+![List 100 000](images/list2_100000.png)
