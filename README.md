@@ -69,3 +69,50 @@ Pagal bendrą apdorojimo laiką mano programoje geresnius rezultatus parodė lis
 
 ![List 10000000](images/list_10000000.png)
 
+
+## v1.0 – Studentų skirstymo optimizavimas
+
+Šioje versijoje buvo realizuotos ir palygintos trys studentų skirstymo į vargšiukus ir kietiakus strategijos, naudojant std::vector ir `std::list` konteinerius.
+
+### Skirstymo strategijos
+
+**1 strategija:** Studentai skirstomi į du naujus konteinerius – vargšiukus ir kietiakus. Pradinis studentų konteineris lieka nepakeistas.
+
+**2 strategija:** Sukuriamas tik vienas naujas konteineris vargšiukams. Studentai, kurių galutinis balas mažesnis nei 5, perkeliami į šį konteinerį ir pašalinami iš pradinio. Pradiniame konteineryje lieka kietiakai.
+
+**3 strategija:** Optimizuota antroji strategija. vector atveju naudojamas std::partition algoritmas, o list atveju – splice() metodas, leidžiantis perkelti elementus jų nekopijuojant.
+
+### Testavimo metodika
+
+Testavimas atliktas su 1 000, 10 000 ir 100 000 studentų failais. Visi bandymai atlikti naudojant tuos pačius iš anksto sugeneruotus duomenis.
+
+- Vertinimo kriterijus: galutinis balas pagal medianą.
+- Kiekviena strategija išmatuota 5 kartus.
+- Lentelėse pateikiamas 5 matavimų aritmetinis vidurkis.
+- Matuotas tik studentų skirstymo laikas, neįtraukiant failų skaitymo, konteinerio pradinio kopijavimo ir rezultatų įrašymo.
+
+### Testavimo rezultatai
+
+#### 1 000 studentų
+
+| Strategija | Vector (s) | List (s) |
+|---|---:|---:|
+| 1 | 0.00013338 | 0.00017864 |
+| 2 | 0.00124310 | 0.00005228 |
+| 3 | 0.00003930 | 0.00001678 |
+
+#### 10 000 studentų
+
+| Strategija | Vector (s) | List (s) |
+|---|---:|---:|
+| 1 | 0.00084262 | 0.00133798 |
+| 2 | 0.10790800 | 0.00042672 |
+| 3 | 0.00036408 | 0.00009348 |
+
+#### 100 000 studentų
+
+| Strategija | Vector (s) | List (s) |
+|---|---:|---:|
+| 1 | 0.01462300 | 0.01922810 |
+| 2 | 11.46880000 | 0.00912214 |
+| 3 | 0.00876394 | 0.00371986 |
