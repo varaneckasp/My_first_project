@@ -73,3 +73,6 @@ vargsiukai.txt
 kietiakai.txt
 .vscode/
 *.exe
+
+build/
+build-mingw/
