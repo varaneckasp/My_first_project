@@ -16,6 +16,7 @@ template <typename T>
 double matuotiStrategija(const T& pradineGrupe, int strategija, int vertinimo_pasirinkimas) {
 
     double laikuSuma = 0;
+    volatile double patikra = 0;
 
     for (int i = 0; i < 5; i++) {
         T grupe = pradineGrupe;
@@ -41,6 +42,9 @@ double matuotiStrategija(const T& pradineGrupe, int strategija, int vertinimo_pa
 
         std::chrono::duration<double> laikas = pabaiga - pradzia;
         laikuSuma += laikas.count();
+        for (const studentas& A : vargsiukai) {
+            patikra += A.galutinis;
+        }
     }
 
     return laikuSuma / 5;
