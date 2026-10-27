@@ -153,3 +153,20 @@ Atlikus bandymus matyti, kad programos greitis priklauso ne tik nuo konteinerio,
 100 000 studentų, list:
 
 ![List 100 000](images/list2_100000.png)
+
+
+### Programos diegimas ir paleidimas
+
+Programai sukompiliuoti naudojamas CMake ir C++ kompiliatorius MinGW.
+
+Terminale vykdomos komandos:
+
+    cmake -S . -B build-mingw -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+
+    cmake --build build-mingw
+
+Programa paleidžiama komanda:
+
+    .\build-mingw\studentai.exe
+
+Paleidus programą galima pasirinkti vector arba list konteinerį, duomenų įvedimo būdą ir studentų skirstymo strategiją. Taip pat galima atlikti automatinį strategijų greičio testavimą.
